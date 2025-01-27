@@ -10,18 +10,18 @@
   "log_history": [
     {
       "epoch": 1.0,
-      "eval_loss": 1.6140414476394653,
-      "eval_runtime": 20.3133,
-      "eval_samples_per_second": 49.229,
-      "eval_steps_per_second": 6.154,
+      "eval_loss": 1.4509685039520264,
+      "eval_runtime": 19.7305,
+      "eval_samples_per_second": 50.683,
+      "eval_steps_per_second": 6.335,
       "step": 125
     },
     {
       "epoch": 2.0,
-      "eval_loss": 1.3611418008804321,
-      "eval_runtime": 21.4786,
-      "eval_samples_per_second": 46.558,
-      "eval_steps_per_second": 5.82,
+      "eval_loss": 1.26369309425354,
+      "eval_runtime": 20.418,
+      "eval_samples_per_second": 48.976,
+      "eval_steps_per_second": 6.122,
       "step": 250
     }
   ],
