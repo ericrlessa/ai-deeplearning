@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEEP LEARNING I</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full">
+        <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">
+            DEEP LEARNING I
+        </h1>
+
+        <label for="tweet" class="block text-gray-700 font-medium mb-2">
+            Tweet Sentiment Extraction:
+        </label>
+       <textarea
+			id="tweet"
+			class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-300"
+			placeholder="Tweet you want to analyze..."
+			rows="4"
+			required
+		></textarea>
+
+        <label for="sentiment" class="block text-gray-700 font-medium mt-4 mb-2">
+            Select Sentiment:
+        </label>
+        <select id="sentiment" class="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-300">
+            <option value="positive">Positive</option>
+            <option value="negative">Negative</option>
+            <option value="neutral">Neutral</option>
+        </select>
+
+        <button 
+            id="submitBtn" 
+            class="w-full bg-blue-600 text-white mt-4 py-2 rounded-md hover:bg-blue-700 transition duration-200">
+            Extract
+        </button>
+
+        <div class="mt-6 p-4 bg-gray-50 border border-gray-300 rounded-md">
+            <h2 class="font-semibold text-gray-700">Response:</h2>
+            <p id="response" class="text-gray-800 mt-2"></p>
+			<div id="loading" class="hidden text-blue-600 mt-2">Processing...</div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("submitBtn").addEventListener("click", async function() {
+
+			const loadingElement = document.getElementById("loading");
+			
+			loadingElement.classList.remove("hidden");
+            document.getElementById("response").textContent = "";
+			
+			const tweet = document.getElementById("tweet").value;
+            if (!tweet.trim()) {
+                alert("Please enter the tweet you want to analyze.");
+                return;
+            }
+			
+            const sentiment = document.getElementById("sentiment").value;
+            const apiUrl = "https://t503e0ujr0.execute-api.us-east-1.amazonaws.com/deeplearning/predict/tweet";
+            const requestData = {
+                inputs: {
+					"question": sentiment,
+					"context": tweet
+				}
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(requestData),
+                });
+
+                const result = await response.json();
+                document.getElementById("response").innerText = result.answer;
+            } catch (error) {				
+                document.getElementById("response").innerText = "Error: " + error.message;
+            }
+			
+			loadingElement.classList.add("hidden");
+        });
+		
+    </script>
+</body>
+</html>
